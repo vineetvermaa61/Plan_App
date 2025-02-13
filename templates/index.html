@@ -1,0 +1,40 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Resizer and Twitter Publisher</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>Image Resizer and Twitter Publisher</h1>
+    
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-info">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    {% if not twitter_logged_in %}
+      <a href="{{ url_for('login') }}" class="btn btn-primary">Login with Twitter</a>
+    {% else %}
+      <p>You are logged in to Twitter!</p>
+    {% endif %}
+    
+    <hr>
+    
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="image" class="form-label">Select an image to upload:</label>
+        <input type="file" class="form-control" id="image" name="image" required>
+      </div>
+      <button type="submit" class="btn btn-success">Upload and Process Image</button>
+    </form>
+  </div>
+</body>
+</html>
